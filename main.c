@@ -48,7 +48,7 @@ int main() {
             strcat(newItem.code, newItem.name);
             strcat(newItem.code, newItem.date);
 
-            if(insert_item(newItem.code, newItem.name, newItem.count, newItem.date)) {
+            if(insert_item("inventory-db.csv",newItem.code, newItem.name, newItem.count, newItem.date)) {
                 printf("\nBerhasil merekam data.\n");
             }
             else printf("\nGagal memasukkan data!\n");
@@ -60,6 +60,9 @@ int main() {
         case '3':
             break;
         case '4':
+            showData("inventory-db.csv");
+            system("pause");
+            goto start;
             break;
         case '5':
             printf("\n");
