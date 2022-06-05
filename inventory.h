@@ -8,7 +8,6 @@ bool insert_item(char *file, char *code, char *name, int count, char *date) {
     while(fgets(buffer, 100, inventory_file)) {
         char *value = strtok(buffer, ";");
         if(strcmp(value, code) == 0) {
-            printf("%s", "\nKode barang sudah digunakan, coba nama barang lain.\n");
             return 0; 
             status = false;
             break;

@@ -51,7 +51,7 @@ int main() {
             if(insert_item("inventory-db.csv",newItem.code, newItem.name, newItem.count, newItem.date)) {
                 printf("\nBerhasil merekam data.\n");
             }
-            else printf("\nGagal memasukkan data!\n");
+            else printf("%s", "\nKode barang sudah digunakan, coba nama barang lain.\n");
             system("pause");
             goto start;
             break;
