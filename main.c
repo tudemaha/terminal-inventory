@@ -13,6 +13,7 @@ struct itemData {
 
 int main() {
     char choice;
+    char cari[80];
     struct itemData newItem;
 
     start:
@@ -58,6 +59,12 @@ int main() {
         case '2':
             break;
         case '3':
+            printf("masukan kode barang yang dicari: ");
+            fflush(stdin);
+            gets(cari);
+            cekBarang("inventory-db.csv",cari);
+            system("pause");
+            goto start;
             break;
         case '4':
             showData("inventory-db.csv");
