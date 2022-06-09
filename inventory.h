@@ -13,6 +13,7 @@ char buffer[100];
 bool insert_item(char *file, char *code, char *name, int count, char *date);
 void showData(char *file);
 void deleteItem(char *file, char *code);
+void cekBarang(char *file, char *cari);
 
 bool insert_item(char *file, char *code, char *name, int count, char *date) {
     bool status = true;
@@ -116,7 +117,7 @@ void deleteItem(char *file, char *code) {
         inventory_file = fopen(file, "w");
         while(iterate != NULL) {
             if(strcmp(iterate->code, code) == 0) {
-                printf("\nItem dihapus:\n");
+                printf("Item dihapus:\n");
                 printf("Kode\t: %s\nNama\t: %s\nBanyak\t: %s\nTanggal\t: %s\n\n", iterate->code, iterate->name, iterate->count, iterate->date);
                 printf("Berhasil dihapus.\n");
             } else {
@@ -125,33 +126,49 @@ void deleteItem(char *file, char *code) {
             iterate = iterate->next;
         }
         fclose(inventory_file);
-    } else printf("\nKode barang yang dimasukkan tidak tersedia.\n");
+    } else printf("Kode barang yang dimasukkan tidak tersedia.\n");
 }
 
 
 
 void cekBarang(char *file, char *cari){
-    char buffer[100];
-    int count = 0;
+    struct Data item;
+    char buffer[100], choice;
     bool check = false;
     inventory_file = fopen(file, "r");
     while(fgets(buffer, 100, inventory_file)) {
         char *value = strtok(buffer, ";");
         if(strcmp(cari,value) == 0){
             printf("Kode\t: %s\n", value);
+            strcpy(item.code, value);
+
             value = strtok(NULL, ";");
             printf("Nama\t: %s\n", value);
+            strcpy(item.name, value);
+
             value = strtok(NULL, ";");
             printf("Banyak\t: %s\n", value);
+            strcpy(item.count, value);
+
             value = strtok(NULL, ";");
             printf("Tanggal\t: %s\n\n", value);
+            strcpy(item.date, value);
+
             check=true;
         }
     }
-    if(!check){
-        printf("\n Barang Tidak Ditemukan \n");
-    }
     fclose(inventory_file);
 
+    if(check) {
+        printf("\nKondisi barang sesuai? (y/n): ");
+        scanf(" %c", &choice);
+        if(choice == 'y' || choice == 'Y') {
+            inventory_file = fopen("checking-db.csv", "a+");
+            fprintf(inventory_file, "%s;%s;%s;%s;\n", item.code, item.name, item.count, item.date);
+            fclose(inventory_file);
+        }
+    } else {
+        printf("\n Barang Tidak Ditemukan \n");
+    }
 }
 

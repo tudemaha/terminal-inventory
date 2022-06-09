@@ -18,7 +18,7 @@ int main() {
     struct itemData newItem;
 
     start:
-    // system("cls");
+    system("cls");
     printf(
         "================================\n"
         "||     TERMINAL INVENTORY     ||\n"
@@ -32,6 +32,7 @@ int main() {
 
     switch(choice) {
         case '1':
+            insert_item:
             printf("\nMasukkan data barang:\n");
             printf("Nama Barang\t: ");
             fflush(stdin);
@@ -54,11 +55,18 @@ int main() {
                 printf("\nBerhasil merekam data.\n");
             }
             else printf("%s", "\nKode barang sudah digunakan, coba nama barang lain.\n");
+
+            _insert_option_:
+            printf("\nIngin memasukkan barang lagi? (y/n): ");
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') goto insert_item;
+            else if(choice == 'n' || choice == 'N') goto start;
+            else goto _insert_option_;
             system("pause");
-            goto start;
             break;
 
         case '2':
+            delete_item:
             printf("\nMasukkan kode barang yang akan dihapus: ");
             fflush(stdin);
             fgets(code, 50, stdin);
@@ -71,17 +79,29 @@ int main() {
             else if(choice == 'n' || choice == 'N') goto start;
             else goto delete_confirmation;
 
+            _delete_option_:
+            printf("\nIngin menghapus barang lagi? (y/n): ");
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') goto delete_item;
+            else if(choice == 'n' || choice == 'N') goto start;
+            else goto _delete_option_;
             system("pause");
-            goto start;
             break;
 
         case '3':
-            printf("masukan kode barang yang dicari: ");
+            check_item:
+            printf("\nMasukan kode barang yang dicari: ");
             fflush(stdin);
             gets(cari);
-            cekBarang("inventory-db.csv",cari);
+            cekBarang("inventory-db.csv", cari);
+
+            _check_option_:
+            printf("\nIngin mengecek barang lagi? (y/n): ");
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') goto check_item;
+            else if(choice == 'n' || choice == 'N') goto start;
+            else goto _check_option_;
             system("pause");
-            goto start;
             break;
 
         case '4':
