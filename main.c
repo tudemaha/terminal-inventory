@@ -12,7 +12,7 @@ struct itemData {
 };
 
 int main() {
-    char choice;
+    char choice, code[50];
     struct itemData newItem;
 
     start:
@@ -55,15 +55,33 @@ int main() {
             system("pause");
             goto start;
             break;
+
         case '2':
+            printf("\nMasukkan kode barang yang akan dihapus: ");
+            fflush(stdin);
+            fgets(code, 50, stdin);
+            code[strcspn(code, "\n")] = 0;
+
+            delete_confirmation:
+            printf("\nYakin menghapus barang berkode %s? (y/n): ", code);
+            scanf(" %c", &choice);
+            if(choice == 'y' || choice == 'Y') deleteItem("inventory-db.csv", code);
+            else if(choice == 'n' || choice == 'N') goto start;
+            else goto delete_confirmation;
+
+            system("pause");
+            goto start;
             break;
+
         case '3':
             break;
+
         case '4':
             showData("inventory-db.csv");
             system("pause");
             goto start;
             break;
+
         case '5':
             printf("\n");
             insert_exit:
@@ -73,6 +91,7 @@ int main() {
             else if(choice == 'n' || choice == 'N') goto start;
             else goto insert_exit;
             break;
+            
         default:
             goto insert_choice;
             break;
